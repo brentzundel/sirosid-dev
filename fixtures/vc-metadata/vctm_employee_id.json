@@ -1,0 +1,111 @@
+{
+  "vct": "urn:yubico:employeeid:1",
+  "name": "Example Employee ID SD-JWT TYPE METADATA",
+  "description": "Example Employee ID SD-JWT Verifiable Credential Type Metadata, based on ietf-oauth-sd-jwt-vc (draft 13), using a single language tag (en-US). Custom Yubico corporate-badge-style credential, not part of the eudi-wallet PID/mDL/Diploma/EHIC family.",
+  "$comment": "New in Slice A of the YubiId VC wallet integration effort (see docs/integration/04-integration-design.md). Modeled on vctm_pid_arf_1_8.json's structure/format.",
+  "display": [
+    {
+      "locale": "en-US",
+      "name": "Employee ID",
+      "rendering": {
+        "simple": {
+          "logo": {
+            "uri": "https://demo-issuer.wwwallet.org/public/creds/pid/person-identification-data-svg-example-01.svg",
+            "uri#integrity": "sha256-037rNwIiS/qeKc16yxy3xJlAYYFGul1wJAcGjXjDVLw="
+          }
+        }
+      }
+    }
+  ],
+  "claims": [
+    {
+      "path": [
+        "employee_id"
+      ],
+      "mandatory": true,
+      "sd": "always",
+      "svg_id": "employee_id",
+      "display": [
+        {
+          "locale": "en-US",
+          "label": "Employee ID",
+          "description": "Unique identifier assigned to the employee by the issuing organization."
+        }
+      ]
+    },
+    {
+      "path": [
+        "full_name"
+      ],
+      "mandatory": true,
+      "sd": "always",
+      "svg_id": "full_name",
+      "display": [
+        {
+          "locale": "en-US",
+          "label": "Full name",
+          "description": "Employee's full legal name."
+        }
+      ]
+    },
+    {
+      "path": [
+        "department"
+      ],
+      "mandatory": true,
+      "sd": "always",
+      "svg_id": "department",
+      "display": [
+        {
+          "locale": "en-US",
+          "label": "Department",
+          "description": "Organizational department the employee belongs to."
+        }
+      ]
+    },
+    {
+      "path": [
+        "job_title"
+      ],
+      "mandatory": true,
+      "sd": "always",
+      "svg_id": "job_title",
+      "display": [
+        {
+          "locale": "en-US",
+          "label": "Job title",
+          "description": "Employee's job title or role."
+        }
+      ]
+    },
+    {
+      "path": [
+        "photo"
+      ],
+      "sd": "always",
+      "svg_id": "photo",
+      "display": [
+        {
+          "locale": "en-US",
+          "label": "Photo",
+          "description": "Base64-encoded photo of the employee, same convention as PID's picture claim."
+        }
+      ]
+    },
+    {
+      "path": [
+        "issue_date"
+      ],
+      "mandatory": true,
+      "sd": "always",
+      "svg_id": "issue_date",
+      "display": [
+        {
+          "locale": "en-US",
+          "label": "Issue date",
+          "description": "Date the Employee ID credential was issued."
+        }
+      ]
+    }
+  ]
+}

@@ -42,6 +42,12 @@ common:
     siros_id:
       vctm_file_path: "/metadata/vctm_siros_id.json"
       format: "dc+sd-jwt"
+    # New custom "Employee ID" credential type added for the YubiId VC wallet
+    # integration effort (Slice A, docs/integration/04-integration-design.md).
+    # Not part of sirosid's existing PID/mDL/Diploma/EHIC fixture family.
+    employee_id:
+      vctm_file_path: "/metadata/vctm_employee_id.json"
+      format: "dc+sd-jwt"
     # mso_mdoc / MDDLSchema, per sirosfoundation/vc#23 (feature/support-mdoc-schema-driven,
     # commit 1d9b23a2) - only usable with a custom-built image
     # (IMAGES=vc-issuer=...,vc-apigw=... at deploy time), since no published
@@ -132,11 +138,19 @@ apigw:
         mdl:
           auth_provider: oidc
           auth_claims: ["given_name", "family_name"]
+        # New custom "Employee ID" credential type (YubiId VC wallet
+        # integration, Slice A). No mandatory-expiry-claim complication like
+        # pid_1_8, but kept as a datastore scope (not "assertion") for
+        # consistency and to carry a full document_data record.
+        employee_id:
+          auth_provider: oidc
+          auth_claims: ["given_name", "family_name"]
       import:
         file_paths:
           - "/bootstrapping/diploma.json"
           - "/bootstrapping/pid_1_8.json"
           - "/bootstrapping/mdl.json"
+          - "/bootstrapping/employee_id.json"
   delivery:
     openid4vci:
       token_endpoint: "https://vc-proxy:8443/token"
@@ -161,6 +175,14 @@ apigw:
             - "diploma"
             - "ehic"
             - "mdl"
+        # YubiId VC wallet client (YubiId VC wallet integration, Slice A).
+        # redirect_uri uses its own custom scheme - does not collide with the
+        # existing "siros-sample://callback" test-wallet scheme above.
+        "yubiid-app":
+          type: "public"
+          redirect_uri: "app.yubiid.vc://callback"
+          scopes:
+            - "employee_id"
     credential_offers:
       issuer_url: "https://vc-proxy:8443"
       wallets:
@@ -173,6 +195,9 @@ apigw:
         android:
           label: "SIROS Android (Waydroid)"
           redirect_uri: "siros-sample://callback"
+        yubiid:
+          label: "YubiId"
+          redirect_uri: "app.yubiid.vc://callback"
 
 # =============================================================================
 # Issuer Service - OpenID4VCI Credential Issuer
@@ -238,6 +263,13 @@ verifier:
             - "pid"
             - "diploma"
             - "ehic"
+        # YubiId VC wallet client (YubiId VC wallet integration, Slice A),
+        # mirroring e2e-test-client's shape but scoped to employee_id only.
+        "yubiid-app":
+          type: "public"
+          redirect_uri: "app.yubiid.vc://callback"
+          scopes:
+            - "employee_id"
       supported_credentials:
         - vct: "urn:eudi:pid:arf-1.8:1"
           scopes:
@@ -251,6 +283,9 @@ verifier:
         - vct: "urn:eudi:diploma:1"
           scopes:
             - "diploma"
+        - vct: "urn:yubico:employeeid:1"
+          scopes:
+            - "employee_id"
       presentation_timeout: 300
       presentation_requests_dir: "/presentation_requests"
       preferred_vp_formats:
