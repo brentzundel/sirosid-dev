@@ -50,12 +50,6 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:9004/health"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
     networks:
       - e2e-test-network
 
@@ -82,13 +76,7 @@ services:
       mongodb:
         condition: service_healthy
       vc-registry:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:8081/health"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
+        condition: service_started
     networks:
       - e2e-test-network
 
@@ -99,6 +87,7 @@ services:
       dockerfile: dockerfiles/worker
       args:
         SERVICE_NAME: verifier
+      target: runtime-verifier
     image: vc-verifier-e2e-test:local
     container_name: vc-verifier-e2e
     ports:
@@ -122,12 +111,6 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:9001/health"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
     networks:
       e2e-test-network:
         # See vc-apigw's alias below - same mechanism, same reason.
@@ -168,15 +151,9 @@ services:
       mongodb:
         condition: service_healthy
       vc-issuer:
-        condition: service_healthy
+        condition: service_started
       vc-registry:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:9003/health"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
+        condition: service_started
     networks:
       e2e-test-network:
         # Lets containers reach apigw at the SAME hostname the browser uses,
