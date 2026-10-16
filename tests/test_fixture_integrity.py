@@ -78,6 +78,9 @@ IDENTITY_CLAIMS = {
             ("birth_date",): "birth_date"},
     "pid_mdoc": {("given_name",): "given_name",
                  ("family_name",): "family_name"},
+    "employee_mdoc": {("given_name",): "given_name",
+                      ("family_name",): "family_name",
+                      ("birth_date",): "birth_date"},
     "mdl_zk4": {("given_name",): "given_name",
                 ("family_name",): "family_name"},
     # The EBW attestations describe a legal person, but three of them still

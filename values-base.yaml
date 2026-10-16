@@ -199,6 +199,19 @@ features:
         source: datastore
         authOptions:
           claims: [given_name, family_name]
+    # The EUDI Employee ID (docType and claims as published by issuer.eudiw.dev),
+    # issued here so that the claim values are ours (YubiID POC). preauth: issued
+    # only through a pre-authorized offer for a chosen datastore document
+    # (`make datastore-offer SCOPE=employee_mdoc`), never by a wallet-initiated
+    # login, so an HR admin can issue a given employee's document.
+    employee_mdoc:
+      vct: "eu.europa.ec.eudi.employee.1"
+      doctype: "eu.europa.ec.eudi.employee.1"
+      format: mso_mdoc
+      mdocSchema: {file: fixtures/vc-metadata/employee_mdoc.mdoc.json}
+      issuance:
+        authProvider: preauth
+        source: datastore
     # 4-claim org.iso.18013.5.1.mDL variant for Vega ZK testing. Neither "mdl"
     # (30+ claims, over VegaProofSystem's fixed 4-slot circuit) nor "pid_mdoc"
     # (right claim count, wrong docType/namespace - zk-cred-vega's mso.rs
@@ -258,6 +271,7 @@ issuer:
       mdl: {file: fixtures/vc-bootstrapping/mdl.json}
       mdl_zk4: {file: fixtures/vc-bootstrapping/mdl_zk4.json}
       pid_mdoc: {file: fixtures/vc-bootstrapping/pid_mdoc.json}
+      employee_mdoc: {file: fixtures/vc-bootstrapping/employee_mdoc.json}
       siros_id: {file: fixtures/vc-bootstrapping/siros_id.json}
       # EU Business Wallet documents for the mini-oidc company users -
       # PID-authenticated issuance (see features.credentialTypes.ebw_oid/eucc/eu_poa).
@@ -324,7 +338,7 @@ issuer:
                 redirect_uri:
                   - "siros-sample://callback"
                   - "http://localhost:3000/id/default/cb"
-                scopes: [pid, pid_1_5, pid_1_8, diploma, ehic, mdl, mdl_zk4, pid_mdoc, ebw_oid, eucc, eu_poa, iban_ov]
+                scopes: [pid, pid_1_5, pid_1_8, diploma, ehic, mdl, mdl_zk4, pid_mdoc, employee_mdoc, ebw_oid, eucc, eu_poa, iban_ov]
               e2e-test-client-2:
                 type: public
                 redirect_uri: "http://localhost:3000/id/default/cb"
