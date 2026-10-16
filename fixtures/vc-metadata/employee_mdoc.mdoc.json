@@ -1,0 +1,57 @@
+{
+  "format": "mso_mdoc",
+  "doctype": "eu.europa.ec.eudi.employee.1",
+  "display": [
+    {
+      "locale": "en",
+      "name": "Employee ID (MSO Mdoc)",
+      "description": "EUDI Employee ID (mdoc)",
+      "background_color": "#003399",
+      "text_color": "#ffffff"
+    }
+  ],
+  "claims": {
+    "eu.europa.ec.eudi.employee.1": {
+      "given_name": {
+        "mandatory": true,
+        "value_type": "tstr",
+        "display": [{ "locale": "en", "name": "Given Name(s)" }]
+      },
+      "family_name": {
+        "mandatory": true,
+        "value_type": "tstr",
+        "display": [{ "locale": "en", "name": "Family Name(s)" }]
+      },
+      "birth_date": {
+        "mandatory": true,
+        "value_type": "full-date",
+        "display": [{ "locale": "en", "name": "Birth Date" }]
+      },
+      "employee_id": {
+        "mandatory": true,
+        "value_type": "tstr",
+        "display": [{ "locale": "en", "name": "Employee ID" }]
+      },
+      "employer_name": {
+        "mandatory": true,
+        "value_type": "tstr",
+        "display": [{ "locale": "en", "name": "Employer Name" }]
+      },
+      "employment_start_date": {
+        "mandatory": true,
+        "value_type": "full-date",
+        "display": [{ "locale": "en", "name": "Employment Start Date" }]
+      },
+      "employment_type": {
+        "mandatory": true,
+        "value_type": "tstr",
+        "display": [{ "locale": "en", "name": "Employment Type" }]
+      },
+      "country_code": {
+        "mandatory": true,
+        "value_type": "tstr",
+        "display": [{ "locale": "en", "name": "Country Code" }]
+      }
+    }
+  }
+}

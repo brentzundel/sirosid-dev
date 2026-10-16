@@ -1,0 +1,23 @@
+{
+  "alice-001": {
+    "meta": {
+      "authentic_source": "mini-oidc",
+      "scope": "employee_mdoc",
+      "document_id": "document_id_employee_mdoc_alice-001-full",
+      "created_at": "0001-01-01T00:00:00Z"
+    },
+    "identity_mapping_ids": [
+      "alice-001"
+    ],
+    "document_data": {
+      "given_name": "Alice",
+      "family_name": "Wonderland",
+      "birth_date": "1990-01-15",
+      "employee_id": "CS-0042",
+      "employer_name": "CoolSecure",
+      "employment_start_date": "2026-10-01",
+      "employment_type": "full-time",
+      "country_code": "SE"
+    }
+  }
+}
